@@ -16,7 +16,8 @@ def read_file(fileloc):
 
     if 'Thermosalinograph' in fileloc:
         df = pd.read_table(fileloc, parse_dates=[[0,1]], index_col=0, sep=',|\s+',
-                           header=0, usecols=[0,1,3,4,5], names=['Dates [UTC?]', '', 'Conductivity', 'Practical salinity', 'Temperature'])
+                           header=0, usecols=[0,1,3,4,5], engine='python',
+                           names=['Dates [UTC?]', '', 'Conductivity', 'Practical salinity', 'Temperature'])
     else:
         print('not ready to read in that file yet.')
 
