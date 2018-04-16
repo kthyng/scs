@@ -14,23 +14,15 @@ def read_file(fileloc):
     df = read.read_file(loc)
     '''
 
-    # if var.lower() in ['salt', 'salinity', 'temp', 'temperature', 'conductivity', 'salinograph']:
-    #     File = 'Sea-Bird-Thermosalinograph-(converted-ASCII-data)_20170927-162751.Raw'
-    # else:
-    #     print('variable %s has not been written into code yet.' % (var))
-
-    # base = '/Users/kthyng/Documents/data/HRRO1 (HRR_Leg2) September 27-29 2017/'
-    # loc = base + 'SCS_ Point Sur/PS18_09_Leg2_Whilden_SCS/'
-
     if 'Thermosalinograph' in fileloc:
-        df = pd.read_table(loc + File, parse_dates=[[0,1]], index_col=0, sep=',|\s+',
+        df = pd.read_table(fileloc, parse_dates=[[0,1]], index_col=0, sep=',|\s+',
                            header=0, usecols=[0,1,3,4,5], names=['Dates [UTC?]', '', 'Conductivity', 'Practical salinity', 'Temperature'])
     else:
         print('not ready to read in that file yet.')
 
     # read in gps data
-    gpsfile = 'ASHTECH-$GPGGA-RAW_20170927-162751.Raw'
-    gps = pd.read_csv(loc + gpsfile, parse_dates=[[0,1]], index_col=0, header=0,
+    gpsfile = '/'.join(fileloc.split('/')[:-1]) + '/ASHTECH-$GPGGA-RAW_' + fileloc.split('/')[-1].split('_')[-1]
+    gps = pd.read_csv(gpsfile, parse_dates=[[0,1]], index_col=0, header=0,
                       usecols=[0,1,4,6], names=['Dates [UTC?]', '', 'lat', 'lon'])
 
     # convert from shoved-together numbers to decimal degrees by pulling apart
@@ -51,4 +43,4 @@ def read_file(fileloc):
     df['lat'] = gps['lat']
     df['lon'] = gps['lon']
 
-return df
+    return df
