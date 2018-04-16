@@ -11,7 +11,7 @@ def read_file(fileloc):
     Example:
     import read
     loc = '/Users/kthyng/Documents/data/HRRO1 (HRR_Leg2) September 27-29 2017/SCS_ Point Sur/PS18_09_Leg2_Whilden_SCS/Sea-Bird-Thermosalinograph-(converted-ASCII-data)_20170927-162751.Raw'
-    df = read.read_file(loc)
+    df = scs.read_file(loc)
     '''
 
     if 'Thermosalinograph' in fileloc:
