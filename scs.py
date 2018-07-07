@@ -8,6 +8,8 @@ import pandas as pd
 def read_file(fileloc):
     '''Read in SCS file given by fileloc. Return df with lon/lat included.
 
+    Currently works for thermosalinograph file.
+
     Example:
     import read
     loc = '/Users/kthyng/Documents/data/HRRO1 (HRR_Leg2) September 27-29 2017/SCS_ Point Sur/PS18_09_Leg2_Whilden_SCS/Sea-Bird-Thermosalinograph-(converted-ASCII-data)_20170927-162751.Raw'
@@ -18,6 +20,10 @@ def read_file(fileloc):
         df = pd.read_table(fileloc, parse_dates=[[0,1]], index_col=0, sep=',|\s+',
                            header=0, usecols=[0,1,3,4,5], engine='python',
                            names=['Dates [UTC?]', '', 'Conductivity', 'Practical salinity', 'Temperature'])
+    elif 'Chl' in fileloc:
+        df = pd.read_csv(fileloc, parse_dates=[[0,1]], index_col=0, 
+                           header=0, usecols=[0,1,3],
+                           names=['Dates [UTC?]', '', 'Fluorometer-ug/L-Chl-A-DRV-VALUE'])
     else:
         print('not ready to read in that file yet.')
 
